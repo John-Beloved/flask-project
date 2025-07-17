@@ -1,0 +1,186 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     
+    <title>Phone Inventory</title>
+    <link> rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <h2 class="text-center alert alert-danger">Phone Depot - Inventory</h2>
+        <div class="row">
+            <div class="col-sn.2"></div>
+            <div class="col-sn-8">
+                <button class="btn btn-primary" data-toggle="modal" data-target="#newPhoneModal">Add phone</button>
+                
+                {%with messages = get_flashed_messages() %}
+                {%if messages%}
+                {%for message in messages%}
+                <div class="alert alert_success alert_dismissable" role="alert">
+                   <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                    <span aria-hidden="true">&times;</span>
+                   </button>
+                   {{message}} 
+                </div>
+                {%endfor%}
+                {%endif%}
+                {%endwith%}
+
+                <div id="newPhoneModal" class="modal fade" role="dialog"> 
+                    <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4>Enter New Phone</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="{{ url_for('insert')}}" method="POST">
+                                        <div class="form-group">
+                                            <label>
+                                                Name of Phone
+                                            </label>
+                                            <input type="text" name="name_of_phone" placeholder="Name of Phone" class="form-control" id="name_of_phone">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>
+                                                Price
+                                            </label>
+                                            <input type="text" name="price" placeholder="Price in Naira" class="form-control" id="price">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>
+                                                Quantity Received
+                                            </label>
+                                            <input type="text" name="quantity" placeholder="Quantity Received" class="form-control" id="quantity">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>
+                                                Expiry Date
+                                            </label>
+                                            <input type="text" name="expiry_date" placeholder="Expiry Date" class="form-control" id="expiry date">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>
+                                                Batch Number
+                                            </label>
+                                            <input type="text" name="batch_no" placeholder="Batch Number" class="form-control" id="batch_no">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>
+                                                Phone subtype
+                                            </label>
+                                            <input type="text" name="phone_subtype" placeholder="Phone subtype" class="form-control" id="phone_subtype">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Add Phone</button>
+                                    </form>
+                                </div>
+                    
+                            </div>              
+                    </div>  
+                </div>
+                <table class="display" style="width: 100;" id="myTable">
+                <head>
+                    <tr>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Expiry Date</th>
+                        <th>Batch No.</th>
+                        <th>Phone Subtype</th>
+                    </tr>
+                </head>
+                <tbody>
+                    {% for phone in phones %}
+                    <tr>
+                        <td>{{phone.1}}</td>
+                        <td>{{phone.2}}</td>
+                        <td>{{phone.3}}</td>
+                        <td>{{phone.4}}</td>
+                        <td>{{phone.5}}</td>
+                        <td>{{phone.6}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html> -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Phone Inventory</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Phone Inventory</h1>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul>
+              {% for message in messages %}
+                <li>{{ message }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+
+        <form action="/insert" method="POST">
+            <h2>Add New Phone</h2>
+            <input type="text" name="name_of_phone" placeholder="Phone Name" required>
+            <input type="text" name="price" placeholder="Price" required>
+            <input type="number" name="quantity" placeholder="Quantity" required>
+            <input type="date" name="expiry_date" required>
+            <input type="text" name="batch_no" placeholder="Batch No" required>
+            <input type="text" name="phone_subtype" placeholder="Subtype" required>
+            <button type="submit">Add Phone</button>
+        </form>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Expiry</th>
+                    <th>Batch No</th>
+                    <th>Subtype</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for phone in phones %}
+                <tr>
+                    <form action="/update" method="POST">
+                        <td><input type="hidden" name="id" value="{{ phone[0] }}">{{ phone[0] }}</td>
+                        <td><input type="text" name="name_of_phone" value="{{ phone[1] }}"></td>
+                        <td><input type="text" name="price" value="{{ phone[2] }}"></td>
+                        <td><input type="number" name="quantity" value="{{ phone[3] }}"></td>
+                        <td><input type="date" name="expiry_date" value="{{ phone[4]|string }}"></td>
+                        <td><input type="text" name="batch_no" value="{{ phone[5] }}"></td>
+                        <td><input type="text" name="phone_subtype" value="{{ phone[6] }}"></td>
+                        <td>
+                            <button type="submit">Update</button>
+                            <a href="{{ url_for('delete', id_data=phone[0]) }}" onclick="return confirm('Are you sure?')">Delete</a>
+                        </td>
+                    </form>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
