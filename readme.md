@@ -26,9 +26,15 @@ A simple *Flask + MySQL CRUD* web application for managing designed phone invent
 
 ---
 
+## Collaborators
+- JOHN BELOVED -added the index.html and the index route
+- Eluma Daniel - added the style.css for the frontend and flash messages
+- Sunday Emmanuel Izuchukwu -added the delete method
+- Ikwuegbu Daniel -added the update function
+- Moses John -added the insert function
+
 ## 💾 Setup Instructions
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/your-username/phone-inventory-flask.git
-cd phone-inventory-flask
+git clone https://github.com/John-Beloved/flask-project.git
